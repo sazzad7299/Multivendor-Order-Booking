@@ -224,3 +224,5 @@ function toggleNavbar(collapseID) {
     ctx = document.getElementById("bar-chart").getContext("2d");
     window.myBar = new Chart(ctx, config);
   })();
+
+$('#dataTable').DataTable();
