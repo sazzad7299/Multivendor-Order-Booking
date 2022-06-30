@@ -26,3 +26,5 @@
         </ul>
     </div>
 </nav>
+<div class="relative bg-pink-600 md:pt-20 ">
+</div>

@@ -52,8 +52,7 @@
             <div class="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-blueGray-200">
                 <div class="flex flex-wrap">
                     <div class="w-6/12">
-                        <a class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-                            href="javascript:void(0)">
+                        <a href="{{ route('developer.home') }}" class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
                             Logo
                         </a>
                     </div>
@@ -74,8 +73,16 @@
                 </li>
                 <li class="items-center">
                     <a class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                        href="#/landing"><i class="fas fa-newspaper text-blueGray-400 mr-2 text-sm"></i>
+                        href="{{ route('developer.view') }}"><i class="fas fa-newspaper text-blueGray-400 mr-2 text-sm"></i>
                         Orders</a>
+                </li>
+                <hr class="my-4 md:min-w-full" />
+                <li class="items-center">
+                    <a href="{{ route('logout') }}" class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();"><i class="fas fa-fingerprint text-blueGray-400 mr-2 text-sm"></i>{{ __('Logout') }}</a>
+                    <form id="logout-form" action="{{ route('developer.logout') }}" method="POST" class="hidden">
+                        {{ csrf_field() }}
+                    </form>
                 </li>
             </ul>
         </div>

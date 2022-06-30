@@ -25,6 +25,7 @@ class AuthController extends Controller
         return redirect()->back()->with('flash_login_massage_error','Please activate your Account before login');
       }else{
         Auth::guard('developer')->attempt(['email' => $data['email'], 'password' => $data['password']]);
+        session()->put('vendor_id',$userStatus->id);
         return redirect()->intended(route('developer.home'));
       }
       } else{
@@ -109,6 +110,7 @@ class AuthController extends Controller
   public function destroy(Request $request)
     {
         Auth::guard('developer')->logout();
+        session()->forget('vendor_id');
 
         $request->session()->invalidate();
 

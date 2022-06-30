@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Developer\AuthController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 
@@ -19,6 +20,13 @@ Route::prefix('developer')->middleware('theme:developer')->name('developer.')->g
     Route::middleware(['auth:developer'])->group(function () {
         Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
         Route::view('/home', 'home')->name('home');
+
+        //OrderController
+
+        Route::get('/orders', [OrderController::class, 'view'])->name('view');
+        Route::get('/orders/add', [OrderController::class, 'add'])->name('add');
+        Route::post('/orders/store', [OrderController::class, 'store'])->name('store');
+        Route::get('/orders/edit/{id}', [OrderController::class, 'edit'])->name('edit');
     });
 });
 Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
