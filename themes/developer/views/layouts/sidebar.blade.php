@@ -78,6 +78,11 @@
                 </li>
                 <hr class="my-4 md:min-w-full" />
                 <li class="items-center">
+                    <a class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
+                        href="{{ route('developer.profile') }}"><i class="fas fa-newspaper text-blueGray-400 mr-2 text-sm"></i>
+                        Profile</a>
+                </li>
+                <li class="items-center">
                     <a href="{{ route('logout') }}" class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();"><i class="fas fa-fingerprint text-blueGray-400 mr-2 text-sm"></i>{{ __('Logout') }}</a>
                     <form id="logout-form" action="{{ route('developer.logout') }}" method="POST" class="hidden">

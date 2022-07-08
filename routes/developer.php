@@ -6,7 +6,7 @@ use App\Http\Controllers\Developer\AuthController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 
 
-Route::prefix('developer')->middleware('theme:developer')->name('developer.')->group(function(){
+Route::prefix('vendor')->middleware('theme:developer')->name('developer.')->group(function(){
     Route::middleware(['guest:developer'])->group(function(){
         Route::view('/login','auth.login')->name('login');
         Route::view('/register','auth.register')->name('register');
@@ -27,6 +27,12 @@ Route::prefix('developer')->middleware('theme:developer')->name('developer.')->g
         Route::get('/orders/add', [OrderController::class, 'add'])->name('add');
         Route::post('/orders/store', [OrderController::class, 'store'])->name('store');
         Route::get('/orders/edit/{id}', [OrderController::class, 'edit'])->name('edit');
+        Route::post('/orders/update/{id}', [OrderController::class, 'update'])->name('update');
+
+
+        //Profile Controling
+
+        Route::get('/profile',[AuthController::class,'profile'])->name('profile');
     });
 });
 Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');

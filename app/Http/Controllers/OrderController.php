@@ -75,4 +75,21 @@ class OrderController extends Controller
         }
 
     }
+    public function update(Request $request,$id=NULL){
+        if($request->isMethod("post")){
+            $data = $request->all();
+
+            Order::where(['id'=>$id])->update([
+                'cus_name'=>$data['cus_name'],
+                'cus_phone'=>$data['cus_phone'],
+                'address'=>$data['address'],
+                'payment_status'=>$data['payment_status'],
+                'product_name'=>$data['product_name'],
+                'quantity'=>$data['quantity'],
+                'product_price'=>$data['product_price'], 
+                'order_note' => $data['order_note']
+            ]);
+            return redirect()->back()->with('success','Order Update Successfully');
+        }
+    }
 }

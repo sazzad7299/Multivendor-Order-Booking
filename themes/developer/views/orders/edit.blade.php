@@ -29,7 +29,7 @@
             </div>
             <hr class="mb-4 border-b-1 border-blueGray-200" />
             <div class="block w-full overflow-x-auto py-3 px-2">
-                <form class="w-full md:w-full " action="{{ route('developer.store') }}" method="post">
+                <form class="w-full md:w-full " action="{{ route('developer.update',['id'=>$order->id]) }}" method="post">
                     @csrf
                     <div class="sm:w-full md:flex mb-4">
                         <div class="sm:w-full md:w-1/3 pl-3">

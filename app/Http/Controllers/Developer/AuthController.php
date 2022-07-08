@@ -107,6 +107,12 @@ class AuthController extends Controller
         ]);
       }
     }
+  public function profile(){
+    $id = Auth::id();
+    // echo "<pre>"; print_r($id);die;
+    $userdata = Developer::where('id',$id)->first();
+    return view('profile',compact('userdata'));
+  }
   public function destroy(Request $request)
     {
         Auth::guard('developer')->logout();
@@ -116,6 +122,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('developer/login');
+        return redirect()->route('developer.login');
     }
 }
