@@ -28,6 +28,7 @@ Route::prefix('vendor')->middleware('theme:developer')->name('developer.')->grou
         Route::post('/orders/store', [OrderController::class, 'store'])->name('store');
         Route::get('/orders/edit/{id}', [OrderController::class, 'edit'])->name('edit');
         Route::post('/orders/update/{id}', [OrderController::class, 'update'])->name('update');
+        Route::get('/order/delete/{id}', [OrderController::class, 'delete'])->name('delete');
 
 
         //Profile Controling

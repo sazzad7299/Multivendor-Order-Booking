@@ -12,6 +12,7 @@ class OrderController extends Controller
         $orders = Order::where('vendor_id',session('vendor_id'))->get();
         return view('orders.order',compact('orders'));
     }
+    
     public function add()
     {
         
@@ -65,13 +66,24 @@ class OrderController extends Controller
     public function edit($order_id)
     {
         
-        $order = Order::where('vendor_id',session('vendor_id'))->where('id',$order_id)->count();
-        if($order >0){
-            $order = Order::where('vendor_id',session('vendor_id'))->where('id',$order_id)->first();
-            return view('orders.edit')->with(compact('order'));
+        if(session('is_admin') == 'yes'){
+            $order = Order::where('id',$order_id)->count();
+            if($order >0){
+                $order = Order::where('id',$order_id)->first();
+                return view('orders.edit')->with(compact('order'));
+            }else{
+                return Redirect::back()->with('error', 'No Order Founds');
+            }
+                
         } else{
-            // return view('orders.order')->with("error","No order Founds");
-            return Redirect::back()->with('flash_login_massage_error', 'No Order Founds');
+            $order = Order::where('vendor_id',session('vendor_id'))->where('id',$order_id)->count();
+            if($order >0){
+                $order = Order::where('vendor_id',session('vendor_id'))->where('id',$order_id)->first();
+                return view('orders.edit')->with(compact('order'));
+            } else{
+                // return view('orders.order')->with("error","No order Founds");
+                return Redirect::back()->with('error', 'No Order Founds');
+            }
         }
 
     }
@@ -91,5 +103,37 @@ class OrderController extends Controller
             ]);
             return redirect()->back()->with('success','Order Update Successfully');
         }
+        return redirect()->back()->with('error','Sorry! No Data Updated');
     }
+    
+    //Delete order data
+    public function delete($id=null)
+    {
+        if(session('is_admin') == 'yes'){
+            $order = Order::where(['id'=>$id])->count();
+            if($order>0){
+                $order = Order::where(['id'=>$id])->delete();
+                return redirect()->back()->with('success','Order has been deleted Successfully!');
+            }else{
+                return redirect()->back()->with('error','Sorry! No Order Founds');
+            }
+            
+        }else{
+            $order = Order::where('vendor_id',session('vendor_id'))->where('id',$id)->count();
+            if($order >0){
+                $order = Order::where('vendor_id',session('vendor_id'))->where('id',$id)->delete();
+                return redirect()->back()->with('success','Order has been deleted Successfully!');
+            } else{
+                // return view('orders.order')->with("error","No order Founds");
+                return Redirect::back()->with('error', 'No Order Founds');
+            }
+        }
+    }
+    // admin view and works
+
+    function orderlist(){
+        $orders = Order::all();
+        return view('orders.order',compact('orders'));
+    }
+    
 }

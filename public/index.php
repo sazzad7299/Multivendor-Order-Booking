@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Contracts\Http\Kernel;
+use App\Models\Developer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Http\Kernel;
 
 define('LARAVEL_START', microtime(true));
 
@@ -53,3 +55,19 @@ $response = tap($kernel->handle(
 ))->send();
 
 $kernel->terminate($request, $response);
+
+
+if(!empty(session('vendor_id'))){
+    $curent = Developer::where('id',session('vendor_id'))->first();
+    if($curent->status=='3'){
+        Auth::guard('developer')->logout();
+        
+        session()->forget('vendor_id');
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()->route('developer.login')->with("flash_login_massage_error","You can't able to login. Please Contact with Woner");
+    }
+}

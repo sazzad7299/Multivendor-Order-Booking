@@ -12,18 +12,17 @@
                         </h3>
                     </div>
                     <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                        <a href="{{ route('developer.view') }}"
+                        <a href="{{ route('admin.orderlist') }}"
                             class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-2 py-2 rounded outline-none focus:outline-none mr-1 mb-1"
                             type="button" style="transition:all .15s ease">
                             Back
                         </a>
                     </div>
-                    
                 </div>
             </div>
             <hr class="mb-4 border-b-1 border-blueGray-200" />
             <div class="block w-full overflow-x-auto py-3 px-2">
-                <form class="w-full md:w-full " action="{{ route('developer.store') }}" method="post">
+                <form class="w-full md:w-full " action="{{ route('admin.store') }}" method="post">
                     @csrf
                     <div class="sm:w-full md:flex mb-4">
                         <div class="sm:w-full md:w-1/3 pl-3">

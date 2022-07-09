@@ -20,6 +20,7 @@ class Developer extends Authenticatable
         'name',
         'email',
         'password',
+        'phone'
     ];
 
     /**

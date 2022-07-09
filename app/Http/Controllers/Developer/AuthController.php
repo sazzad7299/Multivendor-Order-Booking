@@ -19,14 +19,19 @@ class AuthController extends Controller
 
     if($request->isMethod('post')){
       $data = $request->all();
+
       $userStatus= Developer::where('email',$data['email'])->first();
+
+      // echo $userStatus
       if(Hash::check($data['password'], $userStatus->password)){
       if($userStatus->status==0){
         return redirect()->back()->with('flash_login_massage_error','Please activate your Account before login');
-      }else{
+      }else if($userStatus->status==1){
         Auth::guard('developer')->attempt(['email' => $data['email'], 'password' => $data['password']]);
         session()->put('vendor_id',$userStatus->id);
         return redirect()->intended(route('developer.home'));
+      } else if($userStatus->status==3){
+        return redirect()->back()->with('flash_login_massage_error',"You can't able to login. Please Contact with Woner");
       }
       } else{
         throw ValidationException::withMessages([
