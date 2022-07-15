@@ -24,15 +24,17 @@ class AuthController extends Controller
 
       // echo $userStatus
       if(Hash::check($data['password'], $userStatus->password)){
-      if($userStatus->status==0){
-        return redirect()->back()->with('flash_login_massage_error','Please activate your Account before login');
-      }else if($userStatus->status==1){
-        Auth::guard('developer')->attempt(['email' => $data['email'], 'password' => $data['password']]);
-        session()->put('vendor_id',$userStatus->id);
-        return redirect()->intended(route('developer.home'));
-      } else if($userStatus->status==3){
-        return redirect()->back()->with('flash_login_massage_error',"You can't able to login. Please Contact with Woner");
-      }
+        if($userStatus->status==0){
+          return redirect()->back()->with('flash_login_massage_error','Please activate your Account before login');
+        }else if($userStatus->status==3|| Carbon::now() > $userStatus->expair_at){
+          return redirect()->back()->with('flash_login_massage_error',"You can't able to login. Please Contact with Woner. Token No:      $userStatus->id");
+        }
+        else if($userStatus->status==1){
+          Auth::guard('developer')->attempt(['email' => $data['email'], 'password' => $data['password']]);
+          session()->put('vendor_id',$userStatus->id);
+          return redirect()->intended(route('developer.home'));
+        } 
+      
       } else{
         throw ValidationException::withMessages([
           'email' => __('auth.failed'),
@@ -49,19 +51,26 @@ class AuthController extends Controller
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:developers',
         'password' => 'required|string|confirmed|min:8',
-    ]);
-      $user = Developer::create([
+    ]); 
+       Developer::create([
         'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
+        'phone'=>'01238',
+        'expair_at' => Carbon::now()->addDays(7),
       ]);
       $data= $request->all();
       $email =$data['email'];
       $messageData = ['email'=>$data['email'],'name'=>$data['name'],'code'=>base64_encode($email)];
-      Mail::send('auth.email.verify',$messageData,function($message) use($email){
-          $message->to($email)->subject('Verify Your Email!');
-      });
+      // Mail::send('auth.email.verify',$messageData,function($message) use($email){
+      //     $message->to($email)->subject('Verify Your Email!');
+      // });
+
+
     return redirect()->back()->with('success','Your Account Created Successfully. Please Verify your mail before login');
+    
+  
+        // echo "<pre>"; print_r($date);die;
 
   }
   public function verified($code)

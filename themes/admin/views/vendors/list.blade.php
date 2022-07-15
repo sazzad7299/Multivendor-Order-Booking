@@ -86,11 +86,9 @@
                                 </td> --}}
                                 <td class="px-6 py-4 text-center">
                                     <div class="text-sm text-gray-500"><i
-                                            class="fas fa-eye opacity-75 mr-2 text-sm bg-blue-400 p-2 text-black"></i>
-                                            <a href="{{ route('admin.editvendor',['id'=>$vendor->id])}}" class="opacity-100 mr-2 text-sm bg-blue-400 p-2 text-white"><i
+                                            class="fas fa-eye opacity-75 mr-2 text-sm bg-blue-400 p-2 text-black shadow"></i>
+                                            <a href="{{ route('admin.editvendor',['id'=>$vendor->id])}}" class="opacity-100 mr-2 text-sm bg-blue-400 p-2 text-white shadow"><i
                                                 class="fas fa-edit"></i></a>  
-                                                <a href="{{ url('edit/'.$vendor->id) }}"><i
-                                                    class="fas fa-trash opacity-100 mr-2 text-sm text-white bg-red-400 p-2"></i></a>
                                     </div>
                                 </td>
                             </tr>

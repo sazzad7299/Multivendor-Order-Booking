@@ -16,8 +16,10 @@ class CreateDevelopersTable extends Migration
         Schema::create('developers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->bigInteger('phone')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('expair_at');
             $table->string('password');
             $table->integer('status')->default(0);
             $table->rememberToken();

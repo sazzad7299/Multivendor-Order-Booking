@@ -13,32 +13,28 @@ class OrderController extends Controller
         return view('orders.order',compact('orders'));
     }
     
-    public function add()
+    public function add( Request $request)
     {
-        
-        return view('orders.add');
-    }
-    public function store( Request $request){
-        $request->validate(
-            [
-                'cus_name' => 'required',
-                'product_name'=> 'required',
-                'address'=> 'required',
-                'quantity'=> 'required',
-                'cus_phone'=> 'required',
-                'product_price'=> 'required',
-                
-            ],
-            [
-                'cus_name.required' => 'Enter :attribute First',
-                'cus_phone.required' => 'Enter :attribute First',
-                'address.required' => 'Enter :attribute First',
-                'product_price.required' => 'Enter :attribute First',
-                'quantity.required' => 'Enter :attribute First',
-                'product_name.required' => 'Enter :attribute Exits'
-            ]
-        );
         if ($request->isMethod('post')) {
+            $request->validate(
+                [
+                    'cus_name' => 'required',
+                    'product_name'=> 'required',
+                    'address'=> 'required',
+                    'quantity'=> 'required',
+                    'cus_phone'=> 'required',
+                    'product_price'=> 'required',
+                    
+                ],
+                [
+                    'cus_name.required' => 'Enter :attribute First',
+                    'cus_phone.required' => 'Enter :attribute First',
+                    'address.required' => 'Enter :attribute First',
+                    'product_price.required' => 'Enter :attribute First',
+                    'quantity.required' => 'Enter :attribute First',
+                    'product_name.required' => 'Enter :attribute Exits'
+                ]
+            );
             $data = $request->all();
             // Create Unique Refer Id
             // $ids = Order::pluck('refer_code');
@@ -60,12 +56,33 @@ class OrderController extends Controller
             $order->refer_code = $refer_code;
             $order->order_note = $data['order_note'];
             $order->save();
+
+            return back()->with("success","Order Added Successfully!");
         }
-        return back()->with("success","Order Added Successfully!");
+       
+        
+        return view('orders.add');
     }
-    public function edit($order_id)
+
+    public function update(Request $request, $order_id=Null)
     {
         
+        if($request->isMethod('post')){
+            $data = $request->all();
+
+            Order::where(['id'=>$order_id])->update([
+                'cus_name'=>$data['cus_name'],
+                'cus_phone'=>$data['cus_phone'],
+                'address'=>$data['address'],
+                'payment_status'=>$data['payment_status'],
+                'product_name'=>$data['product_name'],
+                'quantity'=>$data['quantity'],
+                'product_price'=>$data['product_price'], 
+                'order_note' => $data['order_note']
+            ]);
+            return redirect()->back()->with('success','Order Update Successfully');
+        }
+
         if(session('is_admin') == 'yes'){
             $order = Order::where('id',$order_id)->count();
             if($order >0){
@@ -87,25 +104,7 @@ class OrderController extends Controller
         }
 
     }
-    public function update(Request $request,$id=NULL){
-        if($request->isMethod("post")){
-            $data = $request->all();
 
-            Order::where(['id'=>$id])->update([
-                'cus_name'=>$data['cus_name'],
-                'cus_phone'=>$data['cus_phone'],
-                'address'=>$data['address'],
-                'payment_status'=>$data['payment_status'],
-                'product_name'=>$data['product_name'],
-                'quantity'=>$data['quantity'],
-                'product_price'=>$data['product_price'], 
-                'order_note' => $data['order_note']
-            ]);
-            return redirect()->back()->with('success','Order Update Successfully');
-        }
-        return redirect()->back()->with('error','Sorry! No Data Updated');
-    }
-    
     //Delete order data
     public function delete($id=null)
     {

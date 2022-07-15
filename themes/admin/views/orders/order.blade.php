@@ -92,7 +92,7 @@
                                 <td class="px-6 py-4 text-center">
                                     <div class="text-sm text-gray-500"><i
                                             class="fas fa-eye opacity-75 mr-2 text-sm bg-blue-400 p-2 text-black"></i>
-                                            <a href="{{ route('admin.edit',['id'=>$order->id])}}" class="opacity-100 mr-2 text-sm bg-blue-400 p-2 text-white"><i
+                                            <a href="{{ route('admin.update',['id'=>$order->id])}}" class="opacity-100 mr-2 text-sm bg-blue-400 p-2 text-white"><i
                                                 class="fas fa-edit"></i></a>  
                                                 <a href="{{ route('admin.delete',['id'=>$order->id]) }}" onclick="return confirm('Are You sure to delete this data?')"><i
                                                     class="fas fa-trash opacity-100 mr-2 text-sm text-white bg-red-400 p-2"></i></a>

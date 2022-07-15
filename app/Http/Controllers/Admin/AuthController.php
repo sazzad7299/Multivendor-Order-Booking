@@ -40,11 +40,37 @@ class AuthController extends Controller
 
         return view('vendors.list', compact('vendors'));
     }
-    public function editvendor($id=null)
+    public function editvendor(Request $request,$id=null)
     {
-        $vendor = Developer::where('id',$id)->first();
 
-        return view('vendors.eidt',compact('vendor'));
+        if($request->isMethod('post')){
+            $data = $request->all();
+        if(empty($data['password'])){
+            $vendordata = Developer::where('id',$id)->first();
+            $password = $vendordata->password;
+        }else{
+            $password = Hash::make($data['password']);
+        }
+        Developer::where('id',$id)->update([
+            'name'=>$data['name'],
+            'email'=>$data['email'],
+            'phone'=>$data['phone'],
+            'expair_at'=> $data['expair_at'],
+            'password'=>$password,
+            'status'=>$data['status'],
+            
+        ]);
+        return redirect()->back()->with('success','Vendor Update Successfully');
+        }
+        $vendor = Developer::where('id',$id)->count();
+        if($vendor >0){
+            $vendor = Developer::where('id',$id)->first();
+            return view('vendors.edit',compact('vendor'));
+        }else{
+            return redirect()->back()->with('error','NO vendor Founds');
+        }
+
+        
     }
     public function addVendor(Request $request)
     {
@@ -71,28 +97,11 @@ class AuthController extends Controller
             $vendor->phone = $data['phone'];
             $vendor->password = Hash::make($data['password']);
             $vendor->status= $data['status'];
+            $vendor->expair_at= $data['expair_at'];
             $vendor->save();
             return redirect()->back()->with('success','Vendor Added Successfully');
         }
         return view('vendors.add');
     }
 
-    public function updateVendor (Request $request,$id=null)
-    {
-        $data = $request->all();
-        if(empty($data['password'])){
-            $vendordata = Developer::where('id',$id)->first();
-            $password = $vendordata->password;
-        }else{
-            $password = Hash::make($data['password']);
-        }
-        Developer::where('id',$id)->update([
-            'name'=>$data['name'],
-            'email'=>$data['email'],
-            'phone'=>$data['phone'],
-            'password'=>$password,
-            'status'=>$data['status'],
-        ]);
-        return redirect()->back()->with('success','Vendor Update Successfully');
-    }
 }
