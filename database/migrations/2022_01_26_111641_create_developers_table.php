@@ -17,9 +17,10 @@ class CreateDevelopersTable extends Migration
             $table->id();
             $table->string('name');
             $table->bigInteger('phone')->unique();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->timestamp('expair_at');
+            $table->date('expair_at');
+            $table->integer('code')->unique()->nullable();
             $table->string('password');
             $table->integer('status')->default(0);
             $table->rememberToken();

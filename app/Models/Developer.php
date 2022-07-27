@@ -18,9 +18,9 @@ class Developer extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
         'password',
         'phone',
+        'code',
         'expair_at'
     ];
 

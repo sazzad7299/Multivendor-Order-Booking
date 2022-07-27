@@ -21,10 +21,10 @@
                     @endif
                     <div class="flex flex-wrap">
                         <label for="name" class="block mb-2 text-sm font-bold text-gray-700">
-                            {{ __('Name') }}:
+                            {{ __('Name*') }}:
                         </label>
 
-                        <input id="name" type="text" class="form-input w-full @error('name')  border-red-500 @enderror"
+                        <input id="name" type="text" class="shadow form-input w-full @error('name')  border-red-500 @enderror"
                             name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                         @error('name')
@@ -33,30 +33,34 @@
                         </p>
                         @enderror
                     </div>
+                    <div class="flex flex-wrap relative items-stretch">
+                        
+                        
+                      
 
-                    <div class="flex flex-wrap">
-                        <label for="email" class="block mb-2 text-sm font-bold text-gray-700">
-                            {{ __('E-Mail Address') }}:
+                        <label for="phone" class="block mb-2 text-sm font-bold text-gray-700">
+                            {{ __('Phone No*') }}:
                         </label>
+                        <span
+                        class="z-10 h-full  font-bold absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-12 pl-2  py-3 top-6"
+                        >+880</i
+                      ></span>
+                        <input id="phone" type="text"  class="shadow form-input w-full @error('phone')  border-red-500 @enderror pl-14"
+                            name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
 
-                        <input id="email" type="email"
-                            class="form-input w-full @error('email') border-red-500 @enderror" name="email"
-                            value="{{ old('email') }}" required autocomplete="email">
-
-                        @error('email')
+                        @error('phone')
                         <p class="mt-4 text-xs italic text-red-500">
                             {{ $message }}
                         </p>
                         @enderror
                     </div>
-
                     <div class="flex flex-wrap">
                         <label for="password" class="block mb-2 text-sm font-bold text-gray-700">
-                            {{ __('Password') }}:
+                            {{ __('Password*') }}:
                         </label>
 
                         <input id="password" type="password"
-                            class="form-input w-full @error('password') border-red-500 @enderror" name="password"
+                            class="shadow form-input w-full @error('password') border-red-500 @enderror" name="password"
                             required autocomplete="new-password">
 
                         @error('password')
@@ -71,19 +75,19 @@
                             {{ __('Confirm Password') }}:
                         </label>
 
-                        <input id="password-confirm" type="password" class="w-full form-input"
+                        <input id="password-confirm" type="password" class="shadow w-full form-input"
                             name="password_confirmation" required autocomplete="new-password">
                     </div>
 
                     <div class="flex flex-wrap">
                         <button type="submit"
-                            class="w-full p-3 text-base font-bold leading-normal text-gray-100 no-underline whitespace-no-wrap bg-blue-500 rounded-lg select-none hover:bg-blue-700 sm:py-4">
+                            class="shadow w-full p-3 text-base font-bold leading-normal text-gray-100 no-underline whitespace-no-wrap bg-blue-500 rounded-lg select-none hover:bg-blue-700 sm:py-4">
                             {{ __('Register') }}
                         </button>
 
                         <p class="w-full my-6 text-xs text-center text-gray-700 sm:text-sm sm:my-8">
                             {{ __('Already have an account?') }}
-                            <a class="text-blue-500 no-underline hover:text-blue-700 hover:underline" href="{{ route('login') }}">
+                            <a class="text-blue-500 no-underline hover:text-blue-700 hover:underline" href="{{ route('developer.login') }}">
                                 {{ __('Login') }}
                             </a>
                         </p>

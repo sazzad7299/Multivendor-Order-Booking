@@ -8,14 +8,32 @@ use Illuminate\Support\Facades\Redirect;
 
 class OrderController extends Controller
 {
+    public function home()
+    {
+        $totalorders = Order::where('vendor_id',session('vendor_id'))->count();
+        $paymentPending = Order::where('vendor_id',session('vendor_id'))->where('payment_status','pending')->count();
+        $completed = Order::where('vendor_id',session('vendor_id'))->where('payment_status','completed')->count();
+        $completedOrder = Order::where('vendor_id',session('vendor_id'))->where('payment_status','completed')->get();
+        $sum =0;
+        foreach($completedOrder as $complete){
+            $sum+= $complete->pay_amount;
+        }
+        
+        return view('home',compact('totalorders','paymentPending','completed','sum'));
+    }
     function view(){
         $orders = Order::where('vendor_id',session('vendor_id'))->get();
         return view('orders.order',compact('orders'));
     }
-    
+    public function viewDetails ($id=null)
+    {
+        $data  = Order::where("vendor_id",session('vendor_id'))->where('id',$id)->first();
+        return response()->json($data);
+    }
     public function add( Request $request)
     {
         if ($request->isMethod('post')) {
+           
             $request->validate(
                 [
                     'cus_name' => 'required',
@@ -23,7 +41,8 @@ class OrderController extends Controller
                     'address'=> 'required',
                     'quantity'=> 'required',
                     'cus_phone'=> 'required',
-                    'product_price'=> 'required',
+                    'product_price'=> 'required|integer',
+                    'pay_amount' =>'required|integer'
                     
                 ],
                 [
@@ -36,6 +55,7 @@ class OrderController extends Controller
                 ]
             );
             $data = $request->all();
+            // echo "<pre>"; print_r($data);die;
             // Create Unique Refer Id
             // $ids = Order::pluck('refer_code');
             // Generate a new unique number
@@ -54,7 +74,9 @@ class OrderController extends Controller
             $order->product_price = $data['product_price'];
             $order->quantity = $data['quantity'];
             $order->refer_code = $refer_code;
-            $order->order_note = $data['order_note'];
+            $order->pay_by = $data['pay_by'];
+            $order->pay_amount = $data['pay_amount'];
+            $order->ac_info = $data['acc_info'];
             $order->save();
 
             return back()->with("success","Order Added Successfully!");
@@ -78,7 +100,9 @@ class OrderController extends Controller
                 'product_name'=>$data['product_name'],
                 'quantity'=>$data['quantity'],
                 'product_price'=>$data['product_price'], 
-                'order_note' => $data['order_note']
+                "pay_by" => $data['pay_by'],
+                "pay_amount" => $data['pay_amount'],
+                "ac_info" => $data['acc_info']
             ]);
             return redirect()->back()->with('success','Order Update Successfully');
         }

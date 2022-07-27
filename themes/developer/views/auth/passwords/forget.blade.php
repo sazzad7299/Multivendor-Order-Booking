@@ -21,15 +21,15 @@
                     @csrf
 
                     <div class="flex flex-wrap">
-                        <label for="email" class="block mb-2 text-sm font-bold text-gray-700 sm:mb-4">
-                            {{ __('E-Mail Address') }}:
+                        <label for="phone" class="block mb-2 text-sm font-bold text-gray-700 sm:mb-4">
+                            {{ __('Your Phone Number') }}:
                         </label>
 
-                        <input id="email" type="email"
-                            class="form-input w-full @error('email') border-red-500 @enderror" name="email"
-                            value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <input id="phone" type="text"
+                            class="form-input w-full @error('phone') border-red-500 @enderror" name="phone"
+                            value="{{ old('phone') }}" required autocomplete="phone" autofocus>
 
-                        @error('email')
+                        @error('phone')
                         <p class="mt-4 text-xs italic text-red-500">
                             {{ $message }}
                         </p>
@@ -39,7 +39,7 @@
                     <div class="flex flex-wrap items-center justify-center pb-6 space-y-6 sm:pb-10 sm:space-y-0 sm:justify-between">
                         <button type="submit"
                         class="w-full p-3 text-base font-bold leading-normal text-gray-100 no-underline whitespace-no-wrap bg-blue-500 rounded-lg select-none hover:bg-blue-700 sm:w-auto sm:px-4 sm:order-1">
-                            {{ __('Send Password Reset Link') }}
+                            {{ __('Send New Password') }}
                         </button>
 
                         <p class="mt-4 text-xs text-blue-500 no-underline whitespace-no-wrap hover:text-blue-700 hover:underline sm:text-sm sm:order-0 sm:m-0">
