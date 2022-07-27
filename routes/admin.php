@@ -22,10 +22,9 @@ Route::prefix('admin')->middleware('theme:admin')->name('admin.')->group(functio
 
         Route::get('/orders', [OrderController::class, 'orderlist'])->name('orderlist');
         Route::match(['get', 'post'], '/orders/add', [OrderController::class, 'add'])->name('add');
-        // Route::post('/orders/store', [OrderController::class, 'store'])->name('store');
-        // Route::get('/orders/edit/{id}', [OrderController::class, 'edit'])->name('edit');
         Route::match(['get','post'],'/orders/edit/{id}', [OrderController::class, 'update'])->name('update');
         Route::get('/order/delete/{id}', [OrderController::class, 'delete'])->name('delete');
+        Route::get('/order/view/{id}', [OrderController::class, 'viewDetails'])->name('viewDetails');
 
 
         //Vendor Controller

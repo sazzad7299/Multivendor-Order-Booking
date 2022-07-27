@@ -27,8 +27,13 @@ class OrderController extends Controller
     }
     public function viewDetails ($id=null)
     {
-        $data  = Order::where("vendor_id",session('vendor_id'))->where('id',$id)->first();
-        return response()->json($data);
+        if(session('is_admin')=="yes"){
+            $data  = Order::where('id',$id)->first();
+            return response()->json($data); 
+        }else{
+            $data  = Order::where("vendor_id",session('vendor_id'))->where('id',$id)->first();
+            return response()->json($data);
+        }
     }
     public function add( Request $request)
     {

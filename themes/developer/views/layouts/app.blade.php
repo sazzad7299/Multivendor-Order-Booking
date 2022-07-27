@@ -56,15 +56,17 @@
 
     {{-- Custom js --}}
     
+
+    @if( \Request::segment(2)=="orders")
     <script>
 		$(document).ready(function() {
-            
+
             $("#viewOrderDetails").hide();
             $(".viewOrder").click(function(){
                 var id = $(this).attr('rel');
                 $.ajax({
                     type: 'get',
-                    url: '/vendor/order/view/'+id,
+                    url: '/admin/order/view/'+id,
                     success:function(resp){
                         $("#viewOrderDetails").show();
 
@@ -121,7 +123,6 @@
             $("#clsbtn").click(function(){
                 $("#viewOrderDetails").hide();
             })
-            
 
             $("select#pay_by").change(function(){
                 var selectedPayment = $(this).children("option:selected").val();
@@ -136,7 +137,13 @@
                     $("#bank label").text("Last 4 digit (;):");
                 }
             });
+		});
 
+
+	</script> 
+    @endif
+    <script>
+		$(document).ready(function() {
 			var table = $('#example').DataTable({
 					responsive: true
 				})

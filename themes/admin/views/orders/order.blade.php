@@ -9,7 +9,7 @@
                 <div class="flex flex-wrap items-center">
                     <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                         <h3 class="font-semibold text-base text-blueGray-700">
-                            All Orders
+                             {{ \Request::segment(2) }}
                         </h3>
                     </div>
                     <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
@@ -74,7 +74,7 @@
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="text-sm text-gray-900">
-                                        {{ $order->refer_code }}
+                                        <a href="javascript:void(0)" class="viewOrder" rel="{{ $order->id }}">{{ $order->refer_code }}<i class="fas fa-eye opacity-75 mr-2 text-sm  p-2 text-black"></i></a>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 text-center">
@@ -106,5 +106,28 @@
         </div>
     </div>
 </div>
+  <!-- Main modal -->
+  <div id="viewOrderDetails" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog">
+    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="crypto-modal" id="clsbtn">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                <span class="sr-only">Close modal</span>
+            </button>
+            <!-- Modal header -->
+            <div class="py-4 px-6 rounded-t border-b dark:border-gray-600" id="ModelHead">
+                
+            </div>
+            <!-- Modal body -->
+            <div class="p-6">
+                <ul class="my-4 space-y-3" id="contentOrders">
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @endsection
