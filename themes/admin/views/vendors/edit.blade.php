@@ -23,7 +23,7 @@
             </div>
             <hr class="mb-4 border-b-1 border-blueGray-200" />
             <div class="block w-full overflow-x-auto py-3 px-2">
-                <form class="w-full md:w-full " action="{{ route('admin.updateVendor',['id'=>$vendor->id]) }}" method="post">
+                <form class="w-full md:w-full " action="{{ route('admin.editvendor',['id'=>$vendor->id]) }}" method="post">
                     @csrf
                     <div class="sm:w-full md:flex mb-4">
                         <div class="sm:w-full md:w-1/3 pl-3">
@@ -38,9 +38,9 @@
                         <div class=" sm:w-full md:w-1/3 pl-3 ">
                             <div class="form-group">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
-                                    Address:
+                                    Expair at:
                                   </label>
-                                  <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="Albuquerque" name="address"  value="{{old('address',$vendor->address)}}">
+                                  <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="date" placeholder="Albuquerque" name="expair_at"  value="{{old('expair_at',$vendor->expair_at)}}">
                                   
                             </div>
                         </div>

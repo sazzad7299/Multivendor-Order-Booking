@@ -8,38 +8,59 @@ use Illuminate\Support\Facades\Redirect;
 
 class OrderController extends Controller
 {
+    public function home()
+    {
+        $totalorders = Order::where('vendor_id',session('vendor_id'))->count();
+        $paymentPending = Order::where('vendor_id',session('vendor_id'))->where('payment_status','pending')->count();
+        $completed = Order::where('vendor_id',session('vendor_id'))->where('payment_status','completed')->count();
+        $completedOrder = Order::where('vendor_id',session('vendor_id'))->where('payment_status','completed')->get();
+        $sum =0;
+        foreach($completedOrder as $complete){
+            $sum+= $complete->pay_amount;
+        }
+        
+        return view('home',compact('totalorders','paymentPending','completed','sum'));
+    }
     function view(){
         $orders = Order::where('vendor_id',session('vendor_id'))->get();
         return view('orders.order',compact('orders'));
     }
-    
-    public function add()
+    public function viewDetails ($id=null)
     {
-        
-        return view('orders.add');
+        if(session('is_admin')=="yes"){
+            $data  = Order::where('id',$id)->first();
+            return response()->json($data); 
+        }else{
+            $data  = Order::where("vendor_id",session('vendor_id'))->where('id',$id)->first();
+            return response()->json($data);
+        }
     }
-    public function store( Request $request){
-        $request->validate(
-            [
-                'cus_name' => 'required',
-                'product_name'=> 'required',
-                'address'=> 'required',
-                'quantity'=> 'required',
-                'cus_phone'=> 'required',
-                'product_price'=> 'required',
-                
-            ],
-            [
-                'cus_name.required' => 'Enter :attribute First',
-                'cus_phone.required' => 'Enter :attribute First',
-                'address.required' => 'Enter :attribute First',
-                'product_price.required' => 'Enter :attribute First',
-                'quantity.required' => 'Enter :attribute First',
-                'product_name.required' => 'Enter :attribute Exits'
-            ]
-        );
+    public function add( Request $request)
+    {
         if ($request->isMethod('post')) {
+           
+            $request->validate(
+                [
+                    'cus_name' => 'required',
+                    'product_name'=> 'required',
+                    'address'=> 'required',
+                    'quantity'=> 'required',
+                    'cus_phone'=> 'required',
+                    'product_price'=> 'required|integer',
+                    'pay_amount' =>'required|integer'
+                    
+                ],
+                [
+                    'cus_name.required' => 'Enter :attribute First',
+                    'cus_phone.required' => 'Enter :attribute First',
+                    'address.required' => 'Enter :attribute First',
+                    'product_price.required' => 'Enter :attribute First',
+                    'quantity.required' => 'Enter :attribute First',
+                    'product_name.required' => 'Enter :attribute Exits'
+                ]
+            );
             $data = $request->all();
+            // echo "<pre>"; print_r($data);die;
             // Create Unique Refer Id
             // $ids = Order::pluck('refer_code');
             // Generate a new unique number
@@ -58,14 +79,39 @@ class OrderController extends Controller
             $order->product_price = $data['product_price'];
             $order->quantity = $data['quantity'];
             $order->refer_code = $refer_code;
-            $order->order_note = $data['order_note'];
+            $order->pay_by = $data['pay_by'];
+            $order->pay_amount = $data['pay_amount'];
+            $order->ac_info = $data['acc_info'];
             $order->save();
+
+            return back()->with("success","Order Added Successfully!");
         }
-        return back()->with("success","Order Added Successfully!");
+       
+        
+        return view('orders.add');
     }
-    public function edit($order_id)
+
+    public function update(Request $request, $order_id=Null)
     {
         
+        if($request->isMethod('post')){
+            $data = $request->all();
+
+            Order::where(['id'=>$order_id])->update([
+                'cus_name'=>$data['cus_name'],
+                'cus_phone'=>$data['cus_phone'],
+                'address'=>$data['address'],
+                'payment_status'=>$data['payment_status'],
+                'product_name'=>$data['product_name'],
+                'quantity'=>$data['quantity'],
+                'product_price'=>$data['product_price'], 
+                "pay_by" => $data['pay_by'],
+                "pay_amount" => $data['pay_amount'],
+                "ac_info" => $data['acc_info']
+            ]);
+            return redirect()->back()->with('success','Order Update Successfully');
+        }
+
         if(session('is_admin') == 'yes'){
             $order = Order::where('id',$order_id)->count();
             if($order >0){
@@ -87,25 +133,7 @@ class OrderController extends Controller
         }
 
     }
-    public function update(Request $request,$id=NULL){
-        if($request->isMethod("post")){
-            $data = $request->all();
 
-            Order::where(['id'=>$id])->update([
-                'cus_name'=>$data['cus_name'],
-                'cus_phone'=>$data['cus_phone'],
-                'address'=>$data['address'],
-                'payment_status'=>$data['payment_status'],
-                'product_name'=>$data['product_name'],
-                'quantity'=>$data['quantity'],
-                'product_price'=>$data['product_price'], 
-                'order_note' => $data['order_note']
-            ]);
-            return redirect()->back()->with('success','Order Update Successfully');
-        }
-        return redirect()->back()->with('error','Sorry! No Data Updated');
-    }
-    
     //Delete order data
     public function delete($id=null)
     {

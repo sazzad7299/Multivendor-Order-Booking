@@ -226,3 +226,4 @@ function toggleNavbar(collapseID) {
   })();
 
 $('#dataTable').DataTable();
+

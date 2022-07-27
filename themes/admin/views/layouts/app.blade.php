@@ -54,6 +54,75 @@
     <!--custom js -->
     <script src="{{ mix('js/custom.js', 'themes/admin') }}" defer></script>
 
+    @if( \Request::segment(2)=="orders")
+    <script>
+		$(document).ready(function() {
+
+            $("#viewOrderDetails").hide();
+            $(".viewOrder").click(function(){
+                var id = $(this).attr('rel');
+                $.ajax({
+                    type: 'get',
+                    url: '/admin/order/view/'+id,
+                    success:function(resp){
+                        $("#viewOrderDetails").show();
+
+                        var data = `<h3 class='text-base font-semibold text-gray-900 lg:text-xl dark:text-white'>Order No: ${resp.refer_code}</h3>`;
+                        $("#ModelHead").html(data);
+                        var content = `<li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Customer Name:${resp.cus_name}</span>
+                          </a>
+                      </li><li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Contact no:${resp.cus_phone}</span>
+                          </a>
+                      </li><li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Address:${resp.address}</span>
+                          </a>
+                      </li><li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Payment Status:${resp.payment_status}</span>
+                          </a>
+                      </li><li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Product:${resp.product_name}</span>
+                          </a>
+                      </li><li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Sale Price:${resp.product_price} TK</span>
+                          </a>
+                      </li><li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Quantity:${resp.quantity}</span>
+                          </a>
+                      </li> <li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Pay By:${resp.pay_by}</span>
+                          </a>
+                      </li><li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Account Info:${resp.ac_info}</span>
+                          </a>
+                      </li><li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Paid:${resp.pay_amount} TK</span>
+                          </a>
+                      </li>`;
+                      $('#contentOrders').html(content);
+                    },
+                    error: function (error) {
+                        
+                    }
+                })
+            })
+            $("#clsbtn").click(function(){
+                $("#viewOrderDetails").hide();
+            })
+		});
+	</script> 
+    @endif
     <script>
 		$(document).ready(function() {
 

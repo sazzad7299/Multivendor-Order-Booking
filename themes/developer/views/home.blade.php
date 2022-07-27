@@ -15,7 +15,7 @@
                       Total Earning
                     </h5>
                     <span class="font-semibold text-xl text-blueGray-700">
-                      350,897
+                      {{ $sum }}TK
                     </span>
                   </div>
                   <div class="relative w-auto pl-4 flex-initial">
@@ -33,10 +33,10 @@
                 <div class="flex flex-wrap">
                   <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
                     <h5 class="text-blueGray-400 uppercase font-bold text-xs">
-                      New Orders
+                      Total Orders
                     </h5>
                     <span class="font-semibold text-xl text-blueGray-700">
-                      2,356
+                     {{ $totalorders }}
                     </span>
                   </div>
                   <div class="relative w-auto pl-4 flex-initial">
@@ -57,7 +57,7 @@
                       Pending Payment
                     </h5>
                     <span class="font-semibold text-xl text-blueGray-700">
-                      924
+                      {{ $paymentPending }}
                     </span>
                   </div>
                   <div class="relative w-auto pl-4 flex-initial">
@@ -78,7 +78,7 @@
                       Complete Orders
                     </h5>
                     <span class="font-semibold text-xl text-blueGray-700">
-                      49,65%
+                      {{ $completed }}
                     </span>
                   </div>
                   <div class="relative w-auto pl-4 flex-initial">
