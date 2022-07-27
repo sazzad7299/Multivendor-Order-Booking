@@ -66,7 +66,7 @@
                 var id = $(this).attr('rel');
                 $.ajax({
                     type: 'get',
-                    url: '/admin/order/view/'+id,
+                    url: '/vendor/order/view/'+id,
                     success:function(resp){
                         $("#viewOrderDetails").show();
 

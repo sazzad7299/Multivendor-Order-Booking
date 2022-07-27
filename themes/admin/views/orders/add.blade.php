@@ -88,16 +88,40 @@
                     </div>
                     
                     <div class="sm:w-full md:flex mb-4">
-                        <div class="sm:w-full md:w-1/2 pl-3">
+                        <div class="sm:w-full md:w-1/4 pl-3">
                             <div class="form-group">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="note">
-                                   Extra Note:
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="pay_by">
+                                  Payment Way:
                                 </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="note" type="text" placeholder="Extra Notes" name="order_note">
+                                
+                                <select  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="pay_by" id="pay_by">
+                                    <option value="bKash">bKash</option>
+                                    <option value="Nagat">Nagat</option>
+                                    <option value="Rocket">Rocket</option>
+                                    <option value="Bank">Bank</option>
+                                    <option value="Cash">Cash</option>
+                                </select>
                                 
                             </div>
                         </div>
-                        <div class=" sm:w-full md:w-1/2 pl-3">
+                        <div class="sm:w-full md:w-1/4 pl-3" id="bank">
+                            <div class="form-group" >
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="account">
+                                  Last 4 digit (;):
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="account" type="text" placeholder="Account Details" name="acc_info"> 
+                            </div>
+                        </div>
+                        <div class="sm:w-full md:w-1/4 pl-3">
+                            <div class="form-group" >
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="pay_amount">
+                                 Pay Amount:
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 @error('pay_amount') border-red-500 @enderror"  id="pay_amount" name="pay_amount" type="number"> 
+                                @error('pay_amount') <p class="text-red-500 text-xs italic">{{ $message }}</p> @enderror
+                            </div>
+                        </div>
+                        <div class=" sm:w-full md:w-1/4 pl-3">
                             <div class="form-group">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
                                     Payment Status:

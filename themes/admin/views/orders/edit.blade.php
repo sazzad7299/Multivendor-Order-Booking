@@ -89,24 +89,49 @@
                     </div>
                     
                     <div class="sm:w-full md:flex mb-4">
-                        <div class="sm:w-full md:w-1/2 pl-3">
+                        <div class="sm:w-full md:w-1/4 pl-3">
                             <div class="form-group">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="note">
-                                   Extra Note:
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="pay_by">
+                                  Payment Way:
                                 </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="note" type="text" placeholder="Extra Notes" name="order_note" value="{{ $order->order_note }}">
+                                
+                                <select  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="pay_by" id="pay_by">
+                                    <option value="bKash" @if($order->pay_by=="bKash") selected @endif>bKash</option>
+                                    <option value="Nagat" @if($order->pay_by=="Nagat") selected @endif>Nagat</option>
+                                    <option value="Rocket" @if($order->pay_by=="Rocket") selected @endif>Rocket</option>
+                                    <option value="Bank" @if($order->pay_by=="Bank") selected @endif>Bank</option>
+                                    <option value="Cash" @if($order->pay_by=="Cash") selected @endif>Cash</option>
+                                </select>
                                 
                             </div>
                         </div>
-                        <div class=" sm:w-full md:w-1/2 pl-3">
+                        <div class="sm:w-full md:w-1/4 pl-3" id="bank" @if($order->pay_by=="Cash") style="display:none" @endif>
+                            <div class="form-group" >
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="account">
+                                  
+                                  @if($order->pay_by=="Bank") BANK ACCOUNT NO: @else Last 4 digit (;): @endif
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="account" type="text" placeholder="Account Details" name="acc_info"  value="{{ $order->ac_info }}"> 
+                            </div>
+                        </div>
+                        <div class="sm:w-full md:w-1/4 pl-3">
+                            <div class="form-group" >
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="pay_amount">
+                                 Pay Amount:
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 @error('pay_amount') border-red-500 @enderror"  id="pay_amount" name="pay_amount"  value="{{ $order->pay_amount }}" type="number"> 
+                                @error('pay_amount') <p class="text-red-500 text-xs italic">{{ $message }}</p> @enderror
+                            </div>
+                        </div>
+                        <div class=" sm:w-full md:w-1/4 pl-3">
                             <div class="form-group">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
                                     Payment Status:
                                   </label>
                                   <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" name="payment_status">
-                                    <option value="pending" @if($order->payment_status == "pending") selected @endif>Pending</option>
-                                    <option value="completed" @if($order->payment_status == "completed") selected @endif>Completed</option>
-                                    <option value="not verified" @if($order->payment_status == "not verified") selected @endif>Not Verified</option>
+                                    <option value="pending" >Pending</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="not verified">Not Verified</option>
                                   </select>
                             </div>
                         </div>

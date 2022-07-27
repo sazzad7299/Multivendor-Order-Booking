@@ -90,8 +90,7 @@
                                     <div class="text-sm text-gray-500">{{ $order->payment_status }}</div>
                                 </td>
                                 <td class="px-6 py-4 text-center">
-                                    <div class="text-sm text-gray-500"><i
-                                            class="fas fa-eye opacity-75 mr-2 text-sm bg-blue-400 p-2 text-black"></i>
+                                    <div class="text-sm text-gray-500">
                                             <a href="{{ route('admin.update',['id'=>$order->id])}}" class="opacity-100 mr-2 text-sm bg-blue-400 p-2 text-white"><i
                                                 class="fas fa-edit"></i></a>  
                                                 <a href="{{ route('admin.delete',['id'=>$order->id]) }}" onclick="return confirm('Are You sure to delete this data?')"><i
@@ -106,8 +105,8 @@
         </div>
     </div>
 </div>
-  <!-- Main modal -->
-  <div id="viewOrderDetails" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog">
+  <!-- Order View Main modal -->
+<div id="viewOrderDetails" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog">
     <div class="relative p-4 w-full max-w-md h-full md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">

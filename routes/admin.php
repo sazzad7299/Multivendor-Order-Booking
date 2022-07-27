@@ -34,6 +34,7 @@ Route::prefix('admin')->middleware('theme:admin')->name('admin.')->group(functio
         // Route::post('/orders/store', [AuthController::class, 'store'])->name('store');
         Route::match(['get','post'],'/vendor/edit/{id}', [AuthController::class, 'editvendor'])->name('editvendor');
         // Route::post('/vendors/update/{id}', [AuthController::class, 'updateVendor'])->name('updateVendor');
+        Route::get('/vendor/view/{id}', [AuthController::class, 'vendorDetails'])->name('vendorDetails');
         
 
 

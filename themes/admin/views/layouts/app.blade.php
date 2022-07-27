@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,13 +12,14 @@
     {{-- fontawesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
-     <!--Regular Datatables CSS-->
-	<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
-	<!--Responsive Extension Datatables CSS-->
-	<link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
+    <!--Regular Datatables CSS-->
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+    <!--Responsive Extension Datatables CSS-->
+    <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
 
     {{-- sweet alert --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.20/sweetalert2.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.20/sweetalert2.min.css" />
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js', 'themes/admin') }}" defer></script>
@@ -25,29 +27,31 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css', 'themes/admin') }}" rel="stylesheet">
 
-    {{-- <link href="{{ mix('css/fontawesome.css', 'themes/admin') }}" rel="stylesheet"> --}}
+    {{--
+    <link href="{{ mix('css/fontawesome.css', 'themes/admin') }}" rel="stylesheet"> --}}
     <link href="{{ mix('css/custom.css', 'themes/admin') }}" rel="stylesheet">
 </head>
+
 <body class="h-screen font-sans antialiased leading-none bg-gray-100">
     <div id="root">
         @include('layouts.sidebar')
         <div class="relative md:ml-64 bg-blueGray-50">
             @include('layouts.topbar')
-    
+
             @yield('content')
-    
-        </div> 
+
+        </div>
 
     </div>
-     <!-- jQuery -->
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-	<!--Datatables -->
-	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <!--Datatables -->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 
     {{-- Sweet alert --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.20/sweetalert2.all.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.20/sweetalert2.all.min.js"></script>
 
 
     <script src="https://unpkg.com/@popperjs/core@2.9.1/dist/umd/popper.min.js" charset="utf-8"></script>
@@ -56,7 +60,7 @@
 
     @if( \Request::segment(2)=="orders")
     <script>
-		$(document).ready(function() {
+        $(document).ready(function() {
 
             $("#viewOrderDetails").hide();
             $(".viewOrder").click(function(){
@@ -119,12 +123,77 @@
             })
             $("#clsbtn").click(function(){
                 $("#viewOrderDetails").hide();
-            })
+            });
+            $("select#pay_by").change(function(){
+                var selectedPayment = $(this).children("option:selected").val();
+                if(selectedPayment =="Bank"){
+                    $("#bank").show();
+                    $("#bank label").text("Bank Account NO:");
+                }
+                else if(selectedPayment =="Cash"){
+                    $("#bank").hide();
+                }else{
+                    $("#bank").show();
+                    $("#bank label").text("Last 4 digit (;):");
+                }
+            });
 		});
-	</script> 
+    </script>
+    @endif
+    @if( \Request::segment(2)=="vendors")
+    <script>
+        $(document).ready(function() {
+
+            $("#viewOrderDetails").hide();
+            $(".viewOrder").click(function(){
+                var id = $(this).attr('rel');
+                $.ajax({
+                    type: 'get',
+                    url: '/admin/vendor/view/'+id,
+                    success:function(resp){
+                        $("#viewOrderDetails").show();
+                        if(resp.status==0){
+                            status="Inactive";
+                        } else if(resp.status ==1){
+                            status = "Active";
+                        }else if(resp.status ==3){
+                            status = "Band";
+                        }
+
+                        var data = `<h3 class='text-base font-semibold text-gray-900 lg:text-xl dark:text-white'>Name: ${resp.name}</h3>`;
+                        $("#ModelHead").html(data);
+                        var content = `<li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Contact no: +880${resp.phone}</span>
+                          </a>
+                      </li><li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Email: ${resp.email}</span>
+                          </a>
+                      </li><li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Expairy Date: ${resp.expair_at}</span>
+                          </a>
+                      </li><li>
+                          <a href="#" class="flex items-center p-3 text-base font-bold text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                              <span class="flex-1 ml-3 whitespace-nowrap">Status: ${status}</span>
+                          </a>
+                      </li>`;
+                      $('#contentOrders').html(content);
+                    },
+                    error: function (error) {
+                        
+                    }
+                })
+            })
+            $("#clsbtn").click(function(){
+                $("#viewOrderDetails").hide();
+            });
+		});
+    </script>
     @endif
     <script>
-		$(document).ready(function() {
+        $(document).ready(function() {
 
 			var table = $('#example').DataTable({
 					responsive: true
@@ -132,8 +201,8 @@
 				.columns.adjust()
 				.responsive.recalc();
 		});
-	</script> 
-    @if(Session::has('success')) 
+    </script>
+    @if(Session::has('success'))
     <script>
         Swal.fire({
             position: 'top-end',
@@ -145,7 +214,7 @@
             })
     </script>
     @endif
-    @if(Session::has('error')) 
+    @if(Session::has('error'))
     <script>
         Swal.fire({
             position: 'top-end',
@@ -158,4 +227,5 @@
     </script>
     @endif
 </body>
+
 </html>

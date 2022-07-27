@@ -108,11 +108,11 @@
                         Vendors</a>
                 </li>
                 
-                <li class="items-center">
+                {{-- <li class="items-center">
                     <a class="text-blueGray-300 text-xs uppercase py-3 font-bold block" href="#pablo"><i
                             class="fas fa-clipboard-list text-blueGray-300 mr-2 text-sm"></i>
                         Subscription</a>
-                </li>
+                </li> --}}
                 
             </ul>
             <hr class="my-4 md:min-w-full" />

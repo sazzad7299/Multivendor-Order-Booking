@@ -117,7 +117,7 @@
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="pay_amount">
                                  Pay Amount:
                                 </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 @error('pay_amount') border-red-500 @enderror"  id="pay_amount" name="pay_amount"  value="{{ $order->pay_amount }}"> 
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 @error('pay_amount') border-red-500 @enderror"  id="pay_amount" name="pay_amount"  value="{{ $order->pay_amount }}" type="number"> 
                                 @error('pay_amount') <p class="text-red-500 text-xs italic">{{ $message }}</p> @enderror
                             </div>
                         </div>

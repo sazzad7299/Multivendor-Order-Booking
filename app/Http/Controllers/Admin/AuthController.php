@@ -103,5 +103,11 @@ class AuthController extends Controller
         }
         return view('vendors.add');
     }
+    public function vendorDetails ($id=null)
+    {
+        
+            $data  = Developer::where('id',$id)->first();
+            return response()->json($data); 
+    }
 
 }
