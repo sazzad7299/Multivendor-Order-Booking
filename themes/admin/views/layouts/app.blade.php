@@ -117,7 +117,7 @@
                       $('#contentOrders').html(content);
                     },
                     error: function (error) {
-                        
+
                     }
                 })
             })
@@ -182,7 +182,7 @@
                       $('#contentOrders').html(content);
                     },
                     error: function (error) {
-                        
+
                     }
                 })
             })

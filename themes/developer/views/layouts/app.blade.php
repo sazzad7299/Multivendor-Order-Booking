@@ -24,9 +24,9 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css', 'themes/developer') }}" rel="stylesheet">
-	
-    
-	
+
+
+
 
 </head>
 
@@ -38,12 +38,12 @@
         @include('layouts.topbar')
 
         @yield('content')
- 
-        </div>  
+
+        </div>
     </div>
 
-    
-    
+
+
     <!-- jQuery -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
@@ -55,7 +55,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.20/sweetalert2.all.min.js" ></script>
 
     {{-- Custom js --}}
-    
+
 
     @if( \Request::segment(2)=="orders")
     <script>
@@ -116,7 +116,7 @@
                       $('#contentOrders').html(content);
                     },
                     error: function (error) {
-                        
+
                     }
                 })
             })
@@ -140,7 +140,7 @@
 		});
 
 
-	</script> 
+	</script>
     @endif
     <script>
 		$(document).ready(function() {
@@ -150,11 +150,11 @@
 				.columns.adjust()
 				.responsive.recalc();
 		});
-        
+
 	</script>
     <script src="{{ mix('js/custom.js', 'themes/developer') }}" defer></script>
 
-    @if(Session::has('success')) 
+    @if(Session::has('success'))
     <script>
         Swal.fire({
             position: 'top-end',
@@ -166,7 +166,7 @@
             })
     </script>
     @endif
-    @if(Session::has('error')) 
+    @if(Session::has('error'))
     <script>
         Swal.fire({
             position: 'top-end',
@@ -180,4 +180,4 @@
     @endif
 </body>
 
-</html> 
+</html>
